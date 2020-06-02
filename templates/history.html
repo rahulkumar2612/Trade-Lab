@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <table class="table">
+        <tr><th>Symbol</th><th>Name</th><th>Shares</th><th>Type</th><th>Price</th><th>Transacted</th></tr>
+        {% for transaction in history: %}
+          {% if transaction["type"]: %}
+            <tr class="tr-custom"><td>{{ transaction["symbol"] }}</td><td>{{ transaction["name"] }}</td><td>{{ transaction["shares"] }}</td><td>{% if transaction["type"]: %} Buy {% else %} Sell {% endif %}</td><td>{{ transaction["t_price"]|usd }}</td><td>{{ transaction["t_time"] }}</td></tr>
+          {% else %}
+            <tr><td>{{ transaction["symbol"] }}</td><td>{{ transaction["name"] }}</td><td>{{ transaction["shares"] }}</td><td>{% if transaction["type"]: %} Buy {% else %} Sell {% endif %}</td><td>{{ transaction["t_price"]|usd }}</td><td>{{ transaction["t_time"] }}</td></tr>
+          {% endif %}
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <table class="table">
+        <tr><th>Rank</th><th>User</th><th>Equity</th><th>Cash</th><th>Total</th></tr>
+        {% for i in range(leaders|length): %}
+          {% if i < 5 or i == curr_idx %}
+            {% if i == curr_idx %}
+              <tr class="tr-custom"><td>{{ i+1 }}</td><td>{{ leaders[i][0] }}</td><td>{{ leaders[i][1]|usd }}</td><td>{{ leaders[i][2]|usd }}</td><td>{{ leaders[i][3]|usd }}</td></tr>
+            {% else %}
+              <tr><td>{{ i+1 }}</td><td>{{ leaders[i][0] }}</td><td>{{ leaders[i][1]|usd }}</td><td>{{ leaders[i][2]|usd }}</td><td>{{ leaders[i][3]|usd }}</td></tr>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+    </table>
+{% endblock %}

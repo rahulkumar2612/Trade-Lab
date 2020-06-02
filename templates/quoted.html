@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Get Quote
+{% endblock %}
+
+{% block main %}
+    <tr>
+        <h3>{{ info["name"] }}</h3>
+        <h3>{{ info["symbol"] }}</h3>
+        <h3>{{ info["price"]|usd }}</h3>
+    </tr>
+{% endblock %}
