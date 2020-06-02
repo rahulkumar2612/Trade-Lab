@@ -1,2 +1,4 @@
 __pycache__/
 newenv/
+.DS_Store
+api_key
