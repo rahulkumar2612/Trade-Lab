@@ -1,13 +1,19 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Get Quote
+    TradeLab - Quote
 {% endblock %}
 
 {% block main %}
-    <tr>
-        <h3>{{ info["name"] }}</h3>
-        <h3>{{ info["symbol"] }}</h3>
-        <h3>{{ info["price"]|usd }}</h3>
-    </tr>
+  <div class="text-margin">
+    <h3>Current price of {{ info["name"] }} ({{ info["symbol"] }}) is {{ info["price"]|usd }}</h3>
+  </div>
+    <form action="/quote" method="post">
+        <div class="form-group">
+            <input class="form-control" type="text" name="symbol" placeholder="Search other (Eg. FB)">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Get Quote</button>
+        </div>
+    </form>
 {% endblock %}

@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Register
+    TradeLab - Register
 {% endblock %}
 
 {% block main %}
@@ -10,7 +10,7 @@
             <input class="form-control" type="text" name="username" placeholder="Username">
         </div>
         <div class="form-group">
-            <input class="form-control" type="password" name="password" placeholder="Password">
+            <input class="form-control" type="password" pattern=".{8,}" required title="Password should have atleast 8 characters" name="password" placeholder="Password">
         </div>
         <div class="form-group">
             <input class="form-control" type="password" name="confirmation" placeholder="Confirm password">

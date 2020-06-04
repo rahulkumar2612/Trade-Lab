@@ -59,20 +59,29 @@ if not os.environ.get("API_KEY"):
 @login_required
 def index():
     data = []
+    buyPrice = []
     # get current user
     x = session["user_id"]
 
     # fetchall gives all the relevant table entries
     rows = db.execute("SELECT * FROM stocks WHERE id = ?", (x,)).fetchall()
     cash = db.execute("SELECT cash FROM users WHERE id = ?", (x, )).fetchall()
-
+    history = db.execute("SELECT symbol, t_price, shares FROM t_table WHERE id = ? AND type = 1 ORDER BY (t_time) DESC", (x,)).fetchall()
     # using rows as python dict
     for row in rows:
         data.append(lookup(row["symbol"]))
-
+        qty = row["quantity"]
+        priceSum, q = 0, 0
+        for line in history:
+            if row["symbol"] == line["symbol"] and qty > 0:
+                lineQty = line["shares"]
+                priceSum += min(qty, lineQty) * line["t_price"]
+                q += min(qty, lineQty)
+                qty = qty - lineQty
+        buyPrice.append(priceSum/q)
     # portfolio info passed onto "home (portfolio)" route
     total = sum([data[i]["price"]* int(rows[i]["quantity"]) for i in range(len(data))])
-    return render_template("index.html", holdings = rows, cash = cash[0]["cash"], data = data, total = total)
+    return render_template("index.html", holdings = rows, cash = cash[0]["cash"], data = data, total = total, buyPrice = buyPrice)
 
 # route which enables user to buy stock (Note: user needs to provide exact stock "symbol" here)
 @app.route("/buy", methods=["GET", "POST"])
@@ -82,7 +91,7 @@ def buy():
     if request.method == "POST":
 
         # store important vals in variables
-        symbol = request.form.get("symbol")
+        symbol = request.form.get("symbol").upper()
         shares = request.form.get("shares")
         info = lookup(symbol)
         x = session["user_id"]
@@ -192,6 +201,8 @@ def quote():
 
         # fetch requested stock info, store it in infoDict and pass it to "quoted" route
         infoDict = lookup(request.form.get("symbol"))
+        if not infoDict:
+            return apology("Please enter a valid symbol (Eg. GOOGL)")
         return render_template("quoted.html", info = infoDict)
 
     # user reached route via GET
@@ -263,7 +274,7 @@ def sell():
 
         # if sell order more than asset owned
         if int(shares) > rows[0]["quantity"]:
-            return apology("You only own %s shares of %s stock" % (rows[0]["quantity"], symbol))
+            return apology("You only own %s share(s) of %s stock" % (rows[0]["quantity"], symbol))
 
         # all checks satisfied, go ahead with updating the DB.
         if rows[0]["quantity"] - int(shares):   # if new quantity is non-zero

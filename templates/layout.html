@@ -14,8 +14,9 @@
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        {% block script %}{% endblock %}
 
-        <title>Trade Lab: {% block title %}{% endblock %}</title>
+        <title>{% block title %}{% endblock %}</title>
 
     </head>
 
@@ -29,6 +30,7 @@
             <div class="collapse navbar-collapse" id="navbar">
                 {% if session.user_id %}
                     <ul class="navbar-nav mr-auto mt-2">
+                        <li class="nav-item"><a class="nav-link" href="/">Portfolio</a></li>
                         <li class="nav-item"><a class="nav-link" href="/quote">Quote</a></li>
                         <li class="nav-item"><a class="nav-link" href="/buy">Buy</a></li>
                         <li class="nav-item"><a class="nav-link" href="/sell">Sell</a></li>
@@ -60,8 +62,7 @@
         </main>
 
         <footer class="small text-center text-muted">
-            Trade Lab is an adaptation of <a href="https://cs50.harvard.edu/x/2020/tracks/web/finance/">Harvard's CS50's 'Finance'</a>.<br>
-            Data provided for free by <a href="https://iextrading.com/developer">IEX</a>. View <a href="https://iextrading.com/api-exhibit-a/">IEX’s Terms of Use</a>.
+            Live data provided for free by <a href="https://iextrading.com/developer">IEX</a>. View <a href="https://iextrading.com/api-exhibit-a/">IEX’s Terms of Use</a>.
         </footer>
 
     </body>

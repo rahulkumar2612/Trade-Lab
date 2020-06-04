@@ -1,17 +1,20 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    Register
+{% block head %}
+    <script src="script/history.js"></script>
 {% endblock %}
+{% block title %}
+    TradeLab - History
+{% endblock%}
 
 {% block main %}
     <table class="table">
-        <tr><th>Symbol</th><th>Name</th><th>Shares</th><th>Type</th><th>Price</th><th>Transacted</th></tr>
+        <tr><th>Symbol</th><th>Name</th><th>Shares</th><th>Type</th><th>Cost Price</th><th>Transaction Time</th></tr>
         {% for transaction in history: %}
           {% if transaction["type"]: %}
-            <tr class="tr-custom"><td>{{ transaction["symbol"] }}</td><td>{{ transaction["name"] }}</td><td>{{ transaction["shares"] }}</td><td>{% if transaction["type"]: %} Buy {% else %} Sell {% endif %}</td><td>{{ transaction["t_price"]|usd }}</td><td>{{ transaction["t_time"] }}</td></tr>
+            <tr class="tr-custom"><td>{{ transaction["symbol"] }}</td><td>{{ transaction["name"] }}</td><td>{{ transaction["shares"] }}</td><td>{% if transaction["type"]: %} Buy {% else %} Sell {% endif %}</td><td class="local-time">{{ transaction["t_price"]|usd }}</td><td>{{ transaction["t_time"] }}</td></tr>
           {% else %}
-            <tr><td>{{ transaction["symbol"] }}</td><td>{{ transaction["name"] }}</td><td>{{ transaction["shares"] }}</td><td>{% if transaction["type"]: %} Buy {% else %} Sell {% endif %}</td><td>{{ transaction["t_price"]|usd }}</td><td>{{ transaction["t_time"] }}</td></tr>
+            <tr><td>{{ transaction["symbol"] }}</td><td>{{ transaction["name"] }}</td><td>{{ transaction["shares"] }}</td><td>{% if transaction["type"]: %} Buy {% else %} Sell {% endif %}</td><td>{{ transaction["t_price"]|usd }}</td><td class="local-time">{{ transaction["t_time"] }}</td></tr>
           {% endif %}
         {% endfor %}
     </table>

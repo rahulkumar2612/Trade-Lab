@@ -6,11 +6,11 @@
 
 {% block main %}
     <table class="table">
-        <tr><th>Symbol</th><th>Name</th><th>Quantity</th><th>Current Price</th><th>Total</th></tr>
-        {% for stock, dataRow in zip(holdings, data): %}
-        <tr><td>{{ dataRow["symbol"] }}</td><td>{{ dataRow["name"] }}</td><td>{{ stock["quantity"] }}</td><td>{{ dataRow["price"]|usd }}</td><td>{{ (dataRow["price"] * stock["quantity"])|usd }}</td></tr>
+        <tr><th>Symbol</th><th>Name</th><th>Qty.</th><th>Cost Price</th><th>Current Price</th><th>Total</th></tr>
+        {% for stock, dataRow, avg in zip(holdings, data, buyPrice): %}
+        <tr><td>{{ dataRow["symbol"] }}</td><td>{{ dataRow["name"] }}</td><td>{{ stock["quantity"] }}</td><td>{{ avg|usd }}</td><td>{{ dataRow["price"]|usd }}</td><td>{{ (dataRow["price"] * stock["quantity"])|usd }}</td></tr>
         {% endfor %}
-        <tr><td>Cash</td><td></td><td></td><td></td><td>{{ cash|usd }}</td></tr>
-        <tr class="tr-custom"><td></td><td></td><td></td><td></td><td>{{ (total + cash)|usd }}</td></tr>
+        <tr><td>Cash balance</td><td></td><td></td><td></td><td></td><td>{{ cash|usd }}</td></tr>
+        <tr class="tr-custom"><td></td><td></td><td></td><td></td><td></td><td>{{ (total + cash)|usd }}</td></tr>
     </table>
 {% endblock %}

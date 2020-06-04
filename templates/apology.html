@@ -1,9 +1,19 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    Apology
+{% block script %}
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+  </script>
 {% endblock %}
 
+{% block title %}
+    TradeLab - Apology
+{% endblock %}
+
+
 {% block main %}
-    <h1> Error {{ error }}: {{ message }} </h1>
+    <h3 class="text-margin"> Error: {{ message }} </h3>
+    <button class="btn btn-warning" onclick="goBack()">Try again</button>
 {% endblock %}
