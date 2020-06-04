@@ -7,7 +7,7 @@
 {% block main %}
     <form action="/register" method="post">
         <div class="form-group">
-            <input class="form-control" type="text" name="username" placeholder="Username">
+            <input class="form-control" type="text" pattern=".{2,}" required title="Username should have atleast 2 characters"  name="username" placeholder="Username">
         </div>
         <div class="form-group">
             <input class="form-control" type="password" pattern=".{8,}" required title="Password should have atleast 8 characters" name="password" placeholder="Password">
